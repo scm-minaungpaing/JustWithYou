@@ -1,10 +1,36 @@
 <template>
   <div>
-    <NuxtLink to="/">Home</NuxtLink> |
-    <NuxtLink to="/dashboard">Dashboard</NuxtLink> |
-    <NuxtLink v-show="!$auth.user" to="/login">Login</NuxtLink> |
-    <a v-show="$auth.user" href="#" @click="logout">Logout</a>
-    <Nuxt/>
+    <div>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-container>
+          <b-navbar-brand><NuxtLink to="/"><i class="fa fa-home"></i> Home</NuxtLink></b-navbar-brand>
+
+          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+          <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav>
+              <b-nav-item><NuxtLink to="/dashboard">Dashboard</NuxtLink></b-nav-item>
+            </b-navbar-nav>
+
+            <!-- Right aligned nav items -->
+            <b-navbar-nav v-if="$auth.user" class="ml-auto">
+              <b-nav-item-dropdown right>
+                <template #button-content>
+                  <i class="fa fa-user"></i> {{ $auth.user.name }}
+                </template>
+                <b-dropdown-item href="#">Profile</b-dropdown-item>
+                <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
+              </b-nav-item-dropdown>
+            </b-navbar-nav>
+
+            <b-navbar-nav v-else class="ml-auto">
+              <b-nav-item><NuxtLink to="/login">Login</NuxtLink></b-nav-item>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-container>
+      </b-navbar>
+    </div>
+    <Nuxt />
   </div>
 </template>
 
@@ -14,15 +40,24 @@ export default {
   methods: {
     async logout() {
       try {
-        await this.$auth.logout()
-      } catch ( error ) {
-        console.log(error)
+        await this.$auth.logout();
+      } catch (error) {
+        console.log(error);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+.navbar-brand a{
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.nav-link a {
+  text-decoration: none;
+  color: #fff;
+}
 </style>
