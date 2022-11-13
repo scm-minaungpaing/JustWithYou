@@ -5,6 +5,7 @@ namespace App\Service\Admin;
 use App\Contracts\Dao\Admin\AdminDaoInterface;
 use App\Contracts\Service\Admin\AdminServiceInterface;
 use App\Models\Admin;
+use Illuminate\Http\Request;
 
 class AdminService implements AdminServiceInterface {
 
@@ -22,5 +23,10 @@ class AdminService implements AdminServiceInterface {
         $admin = Admin::find(1);
 
         return $admin;
+    }
+
+    public function register(Request $request)
+    {
+        return $this->adminDaoInterface->register($request);
     }
 }

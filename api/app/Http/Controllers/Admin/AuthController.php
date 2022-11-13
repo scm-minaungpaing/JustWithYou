@@ -30,6 +30,18 @@ class AuthController extends Controller
         return response()->json(['message' => 'OK'], 201);
     }
 
+    public function register(Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|unique:admins',
+            'kpay' => 'required',
+            'wave' => 'required',
+            'cbpay' => 'required',
+            'ok' => 'required',
+        ]);
+        return $this->adminServiceInterface->register($request);
+        // return response()->json(['message' => $request->all()]);
+    }
+
     public function logout(Request $request) {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
