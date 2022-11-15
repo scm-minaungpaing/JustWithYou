@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -31,15 +32,23 @@ class AuthController extends Controller
     }
 
     public function register(Request $request) {
-        $validated = $request->validate([
+        $rules = array(
             'name' => 'required|unique:admins',
-            'kpay' => 'required',
-            'wave' => 'required',
-            'cbpay' => 'required',
-            'ok' => 'required',
-        ]);
+            'password' => 'required',
+        );
+        $messages = array(
+            'name.required' => 'name field is required.',
+            'password.required' => 'password field is required.'
+        );
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+        $messages = $validator->messages();
+        return response()->json($messages, 400);
+        }
+
+
         return $this->adminServiceInterface->register($request);
-        // return response()->json(['message' => $request->all()]);
     }
 
     public function logout(Request $request) {

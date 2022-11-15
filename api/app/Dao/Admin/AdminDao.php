@@ -16,13 +16,13 @@ class AdminDao implements AdminDaoInterface {
 
     public function register(Request $request)
     {
-        // return DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($request) {
 
-        //     $payment = new Payment();
-        //     $payment->admin_id = 1; // need to change
-        //     $payment->type = 1; // 1 for kpay
-        //     $payment->ph_no = $request->kpay; // need to change
-        // });
-        return response()->json(['message' => 'OK from admin-dao']);
+            $admin = new Admin();
+            $admin->name = strtolower(preg_replace('/\s+/', '', $request->name));
+            $admin->password = bcrypt($request->password);
+
+            $token = $admin->createToken('adminToken')->plainTextToken;
+        });
     }
 }
