@@ -18,6 +18,7 @@ class AdminSeeder extends Seeder
         $admin = new Admin();
         $admin->name = 'admin';
         $admin->password = bcrypt('password123');
+        $admin->is_admin = true;
         $admin->save();
 
         $token = $admin->createToken('adminToken')->plainTextToken;

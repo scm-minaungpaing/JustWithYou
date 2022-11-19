@@ -58,11 +58,10 @@ export default {
           data: this.form,
         })
         .then(() => {
-          this.$toast.success("Hello!");
-          this.$router.push("/dashboard");
+          this.$toast.success("Login Successfully!")
         })
         .catch(() => {
-          this.$toast.error("Login failed!");
+          this.$toast.error("Login failed!")
         } );
     },
   },

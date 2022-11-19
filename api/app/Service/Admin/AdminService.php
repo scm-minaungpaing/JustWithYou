@@ -16,17 +16,13 @@ class AdminService implements AdminServiceInterface {
         $this->adminDaoInterface = $adminDaoInterface;
     }
 
-    public function test()
-    {
-        $test = $this->adminDaoInterface->test();
-
-        $admin = Admin::find(1);
-
-        return $admin;
-    }
-
     public function register(Request $request)
     {
         return $this->adminDaoInterface->register($request);
+    }
+
+    public function getAllUsers()
+    {
+        return $this->adminDaoInterface->getAllUsers();
     }
 }
