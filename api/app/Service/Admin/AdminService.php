@@ -4,7 +4,6 @@ namespace App\Service\Admin;
 
 use App\Contracts\Dao\Admin\AdminDaoInterface;
 use App\Contracts\Service\Admin\AdminServiceInterface;
-use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class AdminService implements AdminServiceInterface {
