@@ -14,7 +14,8 @@ export const mutations = {
 
 export const actions = {
   async register({}, data) {
-    await this.$axios.$post('/register', data)
+    const res = await this.$axios.$post('/register', data)
+    return res
   },
 
   async getAllUsers({commit}) {

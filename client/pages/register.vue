@@ -46,10 +46,10 @@
           >
         </b-form>
       </b-modal>
-      <b-button v-b-modal.modal-1
+      <b-button v-b-modal.payment-modal
         ><i class="fa fa-plus"></i> Payment Register</b-button
       >
-      <b-modal id="modal-1" title="Register New Admin" hide-footer>
+      <b-modal id="payment-modal" title="Register New Admin" hide-footer>
         <b-form @submit.prevent="register">
           <b-form-group
             id="input-group-0"
@@ -133,9 +133,7 @@ export default {
         password: null,
       },
       selected: null,
-      allAdmins: [
-        { value: null, text: "Select an admin" },
-      ],
+      allAdmins: [],
     };
   },
   computed: {
@@ -147,24 +145,44 @@ export default {
     ...mapActions({
       registerAdmin: "admin/register",
       getAllUsers: "admin/getAllUsers",
+      registerPayment: "payment/paymentRegister"
     }),
-    register() {
+    async register() {
       this.payment.admin_id = this.selected
+      const res = await this.registerPayment(this.payment)
+      if (res.status === 200) {
+        this.$toast.success("Payment added Successfully!")
+      }
+      else {
+        this.$toast.error("Payment register failed!")
+      }
       this.payment = {};
       this.selected = null
-      this.$bvModal.hide("modal-1");
+      this.$bvModal.hide("payment-modal");
     },
-    adminRegister() {
-      this.registerAdmin(this.admin);
+    async adminRegister() {
+      const res = await this.registerAdmin(this.admin);
+      if (res.status === 200) {
+        this.allAdmins = []
+        await this.setAlladmins()
+        this.$toast.success("Admin added Successfully!")
+      }
+      else {
+        this.$toast.error("Admin register failed!")
+      }
       this.admin = {};
       this.$bvModal.hide("admin-modal");
     },
+    async setAlladmins() {
+      await this.getAllUsers();
+      this.allAdmins.push({ value: null, text: "Select an admin" })
+      this.allAdmin.forEach(x => {
+        this.allAdmins.push({text: x.name, value: x.id})
+      });
+    }
   },
   async mounted() {
-    await this.getAllUsers();
-    this.allAdmin.forEach(x => {
-      this.allAdmins.push({text: x.name, value: x.id})
-    });
+    await this.setAlladmins()
   },
 };
 </script>

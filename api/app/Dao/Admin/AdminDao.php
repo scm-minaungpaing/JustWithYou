@@ -20,7 +20,7 @@ class AdminDao implements AdminDaoInterface {
 
             $token = $admin->createToken('adminToken')->plainTextToken;
 
-            return response()->json(['message' => 'Register Successfully!']);
+            return response()->json(['message' => 'Register Successfully!', 'status' => 200 ], 200);
         });
     }
 
