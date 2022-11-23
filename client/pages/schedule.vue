@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import dateFormatter from '@/plugins/dateFormatter'
 import TimeBox from '@/components/timeBox.vue'
 import AddScheduleModal from '@/components/scheduleModal.vue'
@@ -142,6 +143,9 @@ export default {
     this.changeMonth(this.getFullDate)
   },
   methods: {
+    ...mapActions({
+      addSchedule: "schedule/addSchedule",
+    }),
     /**
      * get & set month of year
      * @param {string} getFullDate
@@ -267,7 +271,7 @@ export default {
      * save schedule dateTime
      *
      */
-    saveSchedule() {
+    async saveSchedule() {
       this.date_items.forEach(item => {
         if (item.date.type !== 2) {
           (item.date.type === 0) ?
@@ -275,7 +279,10 @@ export default {
           item.date.schedule_times = this.hodliday_times
         }
       });
-     this.cancelSchedule()
+      const res = await this.addSchedule(this.date_items)
+      if (res.status === 200) {
+        this.cancelSchedule()
+      }
     },
     /**
      * cancel schedule time
