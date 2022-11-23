@@ -17,10 +17,6 @@ class AuthController extends Controller
         $this->adminServiceInterface = $adminServiceInterface;
     }
 
-    public function index() {
-        return $this->adminServiceInterface->test();
-    }
-
     public function login(Request $request) {
         if (!Auth::attempt($request->only('name','password'))) {
             throw new AuthenticationException();
@@ -57,5 +53,9 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json(['message' => 'OK'], 200);
+    }
+
+    public function getAllUsers() {
+        return $this->adminServiceInterface->getAllUsers();
     }
 }

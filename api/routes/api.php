@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Admin
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::get('/test', [AuthController::class, 'index']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    // Admin
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/getAllUsers', [AuthController::class, 'getAllUsers']);
+
+    // Payment
+    Route::post('/payment', [PaymentController::class, 'store']);
+
+});
