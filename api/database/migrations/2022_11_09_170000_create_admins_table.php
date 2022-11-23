@@ -18,6 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('password');
             $table->timestamps();
+            $table->boolean('is_admin')->default(false);
         });
     }
 

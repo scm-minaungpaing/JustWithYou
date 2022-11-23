@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'client',
+    title: 'JustWithYou',
     htmlAttrs: {
       lang: 'en'
     },
@@ -43,7 +43,7 @@ export default {
   axios: {
     // proxy: true,
     credentials: true,
-  // baseURL: 'http://localhost:8000/api'
+    baseURL: 'http://localhost:8000/api'
   },
 
   auth: {
