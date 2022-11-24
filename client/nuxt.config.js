@@ -43,7 +43,7 @@ export default {
   axios: {
     // proxy: true,
     credentials: true,
-    baseURL: 'http://localhost:8000/api',
+    baseURL: `${process.env.API_URL}/api`,
     common: {
       'Accept': 'application/json, text/plain, */*'
     },
@@ -53,7 +53,7 @@ export default {
     strategies: {
       laravelSanctum: {
         provider: 'laravel/sanctum',
-        url: 'http://localhost:8000',
+        url: process.env.API_URL,
         endpoints: {
           login: {
             url:'/api/login',
