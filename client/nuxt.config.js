@@ -40,12 +40,18 @@ export default {
   buildModules: [
   ],
 
+  proxy: {
+    // '/api': { target: process.env.API_URL, pathRewrite: {'^/api/': '/' } }
+    '/api': process.env.API_URL
+  },
+
   axios: {
-    // proxy: true,
+    proxy: true,
     credentials: true,
-    baseURL: `${process.env.API_URL}/api`,
+    baseURL: process.env.API_URL,
     common: {
-      'Accept': 'application/json, text/plain, */*'
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
     },
   },
 
@@ -90,6 +96,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'vue-toastification/nuxt',
+    '@nuxtjs/proxy',
 
     ["vue-toastification/nuxt", {
       timeout: 1000,

@@ -14,12 +14,12 @@ export const mutations = {
 
 export const actions = {
   async register({}, data) {
-    const res = await this.$axios.$post('/register', data)
+    const res = await this.$axios.$post('/api/register', data)
     return res
   },
 
   async getAllUsers({commit}) {
-    const res = await this.$axios.$get('/getAllUsers')
+    const res = await this.$axios.$get('/api/getAllUsers')
     return commit('setAllAdmin', res)
   }
 }

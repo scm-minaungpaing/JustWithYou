@@ -11,6 +11,6 @@ export const mutations = {
 
 export const actions = {
   async addSchedule(data) {
-    await this.$axios.$post('/schedule', data)
+    await this.$axios.$post('/api/schedule', data)
   },
 }
