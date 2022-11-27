@@ -18,4 +18,9 @@ class PaymentController extends Controller
     public function store(PaymentStoreRequest $request) {
         return $this->paymentServiceInterface->store($request);
     }
+
+    public function index() {
+        $response = $this->paymentServiceInterface->index();
+        return response()->json(['data' => $response ], 200);
+    }
 }

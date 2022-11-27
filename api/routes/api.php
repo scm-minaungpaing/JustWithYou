@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // Payment
     Route::post('/payment', [PaymentController::class, 'store']);
-
+    Route::get('/payment', [PaymentController::class, 'index']);
 });
 
 Route::group(['prefix' => 'schedule'], function () {

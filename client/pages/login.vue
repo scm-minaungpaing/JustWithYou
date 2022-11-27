@@ -24,13 +24,22 @@
               label="Password:"
               label-for="input-2"
             >
-              <b-form-input
-                id="input-2"
-                v-model="form.password"
-                type="password"
-                placeholder="Enter Password"
-                required
-              ></b-form-input>
+              <b-input-group>
+                <template #append>
+                  <span class="input-group-text" @click="showPassword">
+                    <i v-if="!showPass" class="fa-solid fa-eye"></i>
+                    <i v-else class="fa-solid fa-eye-slash"></i>
+                  </span>
+                </template>
+                <b-form-input
+                  id="input-2"
+                  v-model="form.password"
+                  :type="showPass ? 'text' : 'password'"
+                  placeholder="Enter Password"
+                  required
+                ></b-form-input>
+              </b-input-group>
+
             </b-form-group>
             <b-button type="submit" variant="primary" class="w-100">Submit</b-button>
           </b-form>
@@ -49,6 +58,7 @@ export default {
         name: "",
         password: "",
       },
+      showPass: false
     };
   },
   methods: {
@@ -64,6 +74,10 @@ export default {
           this.$toast.error("Login failed!")
         } );
     },
+    showPassword() {
+      this.showPass = !this.showPass
+
+    }
   },
 };
 </script>
