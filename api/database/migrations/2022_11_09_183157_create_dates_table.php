@@ -18,7 +18,7 @@ class CreateDatesTable extends Migration
             $table->string('day');
             $table->string('month');
             $table->string('year');
-            $table->enum('type', [0, 1, 2]); //['normal', 'holiday', 'closeday']
+            $table->integer('type');
 
             $table->timestamps();
         });

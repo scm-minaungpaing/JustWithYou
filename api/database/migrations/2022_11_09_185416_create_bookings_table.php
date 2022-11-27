@@ -20,11 +20,11 @@ class CreateBookingsTable extends Migration
             $table->string('room');
             $table->boolean('status')->default(false);
             $table->text('image');
-            $table->unsignedBigInteger('schdule_id');
+            $table->unsignedBigInteger('schedule_id');
             $table->unsignedBigInteger('payment_id');
             $table->timestamps();
 
-            $table->foreign('schdule_id')->references('id')->on('schdules')->onDelete('cascade');
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
         });
