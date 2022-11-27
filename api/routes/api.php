@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Payment
     Route::post('/payment', [PaymentController::class, 'store']);
 
+});
+
+Route::group(['prefix' => 'schedule'], function () {
+    Route::post('/save', [ScheduleController::class, 'saveSchedule']);
 });
