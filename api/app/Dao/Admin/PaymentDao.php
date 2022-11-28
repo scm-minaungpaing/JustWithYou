@@ -38,4 +38,10 @@ class PaymentDao implements PaymentDaoInterface
         }
         return response()->json(['message' => 'OK', 'status' => 200], 200);
     }
+
+    public function index()
+    {
+        $payment = Payment::get();
+        return $payment;
+    }
 }

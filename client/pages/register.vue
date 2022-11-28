@@ -145,7 +145,7 @@ export default {
     ...mapActions({
       registerAdmin: "admin/register",
       getAllUsers: "admin/getAllUsers",
-      registerPayment: "payment/paymentRegister"
+      registerPayment: "payment/paymentRegister",
     }),
     async register() {
       this.payment.admin_id = this.selected
@@ -177,7 +177,9 @@ export default {
       await this.getAllUsers();
       this.allAdmins.push({ value: null, text: "Select an admin" })
       this.allAdmin.forEach(x => {
-        this.allAdmins.push({text: x.name, value: x.id})
+        if (x.is_admin !== 1) {
+          this.allAdmins.push({text: x.name, value: x.id})
+        }
       });
     }
   },

@@ -26,6 +26,6 @@ class AdminDao implements AdminDaoInterface {
 
     public function getAllUsers()
     {
-        return Admin::where('is_admin', '!=',1)->select('name','id')->get();
+        return Admin::get();
     }
 }

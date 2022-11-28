@@ -29,4 +29,7 @@ class Admin extends Authenticatable
         return strtolower(preg_replace('/\s+/', '', $value));;
     }
 
+    public function payment() {
+        return $this->hasMany(Payment::class);
+    }
 }

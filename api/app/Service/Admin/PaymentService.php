@@ -17,4 +17,9 @@ class PaymentService implements PaymentServiceInterface {
     public function store($request) {
         return $this->paymentDaoInterface->store($request);
     }
+
+    public function index()
+    {
+        return $this->paymentDaoInterface->index();
+    }
 }
