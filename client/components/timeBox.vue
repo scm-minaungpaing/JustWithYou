@@ -6,7 +6,7 @@
     >
       <div class="d-flex">
         <div class="time">
-          <span>{{ time.start_time }}:00</span> - <span>{{ time.end_time }}:00</span>
+          <span>{{ timeText(time) }}</span>
         </div>
         <div class="action">
           <b-button
@@ -36,6 +36,17 @@ export default {
         type: Array,
         default: [],
       },
+    },
+    computed: {
+      timeText() {
+        return (time) => {
+          return (
+            (time.startTime < 10 ? "0" + time.startTime + ":00" : time.startTime + ":00")
+            + ' - ' +
+            (time.endTime < 10 ? "0" + time.endTime + ":00" : time.endTime + ":00")
+          )
+        }
+      }
     },
     methods: {
       /**

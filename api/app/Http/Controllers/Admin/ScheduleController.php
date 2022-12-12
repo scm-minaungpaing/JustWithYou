@@ -20,7 +20,15 @@ class ScheduleController extends Controller
         $this->scheduleService = $scheduleService;
     }
 
-    public function saveSchedule(Request $request)
+    public function index(Request $request)
+    {
+        $responseData = $this->scheduleService->getDates($request);
+        return response()->json([
+            'dates' => $responseData
+        ], 200);
+    }
+
+    public function store(Request $request)
     {
         $this->scheduleService->saveSchedule($request);
         return response()->json([

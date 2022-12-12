@@ -17,4 +17,9 @@ class ScheduleDao implements ScheduleDaoInterface
     {
         Schedule::create($attributes);
     }
+
+    public function getDates($request)
+    {
+        return Date::where('month', $request->month)->where('year', $request->year)->get();
+    }
 }

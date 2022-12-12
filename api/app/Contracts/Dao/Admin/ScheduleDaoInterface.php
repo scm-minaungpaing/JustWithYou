@@ -6,4 +6,6 @@ interface ScheduleDaoInterface {
     public function saveDate($attributes);
 
     public function saveSchedule($scheduleAttributes);
+
+    public function getDates($request);
 }

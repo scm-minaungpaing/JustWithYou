@@ -4,7 +4,7 @@ namespace App\Service\Admin;
 
 use App\Contracts\Service\Admin\ScheduleServiceInterface;
 use App\Contracts\Dao\Admin\ScheduleDaoInterface;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleService implements ScheduleServiceInterface {
     protected $scheduleDao;
@@ -12,6 +12,10 @@ class ScheduleService implements ScheduleServiceInterface {
     public function __construct(ScheduleDaoInterface $scheduleDao)
     {
         $this->scheduleDao = $scheduleDao;
+    }
+
+    public function getDates($request) {
+        return $this->scheduleDao->getDates($request);
     }
 
     public function saveSchedule($request)
@@ -30,8 +34,8 @@ class ScheduleService implements ScheduleServiceInterface {
                 foreach ($scheduleTimes as $time) {
                     $scheduleAttributes = [
                         'date_id' => $date->id,
-                        'start_time' => $time['start_time'],
-                        'end_time' => $time['end_time'],
+                        'start_time' => $time['startTime'],
+                        'end_time' => $time['endTime'],
                     ];
                     $this->scheduleDao->saveSchedule($scheduleAttributes);
                 }

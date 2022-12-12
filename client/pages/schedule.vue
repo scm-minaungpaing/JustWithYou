@@ -49,8 +49,8 @@
       <div class="time_box">
         <div class="holiday">
           <time-box
-            v-if="hodliday_times.length != 0"
-            :times='hodliday_times'
+            v-if="hodlidayTimes.length != 0"
+            :times='hodlidayTimes'
             @edit="editTime($event)"
           />
           <b-button
@@ -63,8 +63,8 @@
         </div>
         <div class="normal">
           <time-box
-            v-if="normal_times.length != 0"
-            :times='normal_times'
+            v-if="normalTimes.length != 0"
+            :times='normalTimes'
             @edit="editTime($event)"
           />
           <b-button
@@ -82,6 +82,7 @@
         >Cancel</button>
         <button
           @click="saveSchedule"
+          :disabled="hodlidayTimes.length == 0 && normalTimes.length == 0"
         >Save</button>
       </div>
       <add-schedule-modal
@@ -125,9 +126,9 @@ export default {
       start_date: null,
       end_date: null,
       title: null,
-      hodliday_times:[],
-      normal_times:[],
-      day_type: null,
+      hodlidayTimes:[],
+      normalTimes:[],
+      dayType: null,
     }
   },
   computed: {
@@ -225,7 +226,7 @@ export default {
      *
      */
     openModal(type) {
-      this.day_type = type
+      this.dayType = type
       this.title = (type === 0 ) ? "Holiday Time Schedule" : "Normal Day Time Schedule"
       this.$refs.timeScheduleModal.showModal()
     },
@@ -235,7 +236,7 @@ export default {
      *
      */
     setTime(data) {
-      (this.day_type === 0) ? this.setHolidayTime(data) : this.setNormalTime(data)
+      (this.dayType === 0) ? this.setHolidayTime(data) : this.setNormalTime(data)
     },
     /**
      * set schedule time of holiday
@@ -243,10 +244,9 @@ export default {
      *
      */
     setHolidayTime(data) {
-      if (data.index != null) {
-        this.hodliday_times.splice(data.index, 1)
-      }
-      this.hodliday_times.push(data)
+      if (data.startTime === null) data.startTime = 0
+      if (data.endTime === null) data.endTime = 0
+      this.hodlidayTimes.push(data)
     },
     /**
      * set schedule time of normal day
@@ -254,10 +254,9 @@ export default {
      *
      */
     setNormalTime(data) {
-      if (data.index != null) {
-        this.normal_times.splice(data.index, 1)
-      }
-      this.normal_times.push(data)
+      if (data.startTime === null) data.startTime = 0
+      if (data.endTime === null) data.endTime = 0
+      this.normalTimes.push(data)
     },
     /**
      * edit schedule time
@@ -275,11 +274,13 @@ export default {
       this.date_items.forEach(item => {
         if (item.date.type !== 2) {
           (item.date.type === 0) ?
-          item.date.schedule_times = this.normal_times :
-          item.date.schedule_times = this.hodliday_times
+          item.date.schedule_times = this.normalTimes :
+          item.date.schedule_times = this.hodlidayTimes
         }
       });
       const res = await this.addSchedule(this.date_items)
+      console.log('res', res)
+      console.log('this.date_items', this.date_items)
       if (res.status === 200) {
         this.cancelSchedule()
       }
@@ -289,9 +290,9 @@ export default {
      *
      */
     cancelSchedule() {
-      this.hodliday_times = []
-      this.normal_times = []
-      this.day_type = null
+      this.hodlidayTimes = []
+      this.normalTimes = []
+      this.dayType = null
     },
   }
 }
@@ -341,7 +342,7 @@ export default {
     }
     .time_box {
       margin-top: 10px;
-      padding: 10px;
+      padding: 10px 5px;
       border: 1px solid rgb(162, 162, 162);
       display: flex;
       justify-content: space-between;

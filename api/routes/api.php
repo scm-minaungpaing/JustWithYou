@@ -34,8 +34,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Payment
     Route::post('/payment', [PaymentController::class, 'store']);
     Route::get('/payment', [PaymentController::class, 'index']);
+
+    // Schedule
+    Route::post('/schedule', [ScheduleController::class, 'store']);
 });
 
-Route::group(['prefix' => 'schedule'], function () {
-    Route::post('/save', [ScheduleController::class, 'saveSchedule']);
-});
+Route::get('/schedule', [ScheduleController::class, 'index']);
